@@ -42,7 +42,7 @@ class OnPreferencePage extends PageState {
   final RegistrationData registrationData;
 
   OnPreferencePage(this.registrationData);
-  
+
   @override
   List<Object> get props => [];
 }
@@ -51,7 +51,7 @@ class OnAccountConfirmationPage extends PageState {
   final RegistrationData registrationData;
 
   OnAccountConfirmationPage(this.registrationData);
-  
+
   @override
   List<Object> get props => [];
 }
@@ -93,13 +93,13 @@ class OnCheckoutPage extends PageState {
 }
 
 class OnSuccessPage extends PageState {
-  final Ticket ticket;
+  final Ticket? ticket;
   final FlutixTransaction transaction;
 
   OnSuccessPage(this.ticket, this.transaction);
 
   @override
-  List<Object> get props => [ticket, transaction];
+  List<Object> get props => ['$ticket', transaction];
 }
 
 class OnTicketDetailPage extends PageState {

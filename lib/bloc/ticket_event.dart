@@ -18,7 +18,12 @@ class BuyTicket extends TicketEvent {
   final String userID;
 
   BuyTicket(this.ticket, this.userID);
-  
+
   @override
   List<Object> get props => [ticket, userID];
+}
+
+class TicketLoaded extends TicketEvent {
+  @override
+  List<Object?> get props => [];
 }

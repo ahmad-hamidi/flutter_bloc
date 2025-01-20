@@ -9,22 +9,21 @@ part 'ticket_event.dart';
 part 'ticket_state.dart';
 
 class TicketBloc extends Bloc<TicketEvent, TicketState> {
-  TicketBloc() : super(TicketState([]));
+  TicketBloc() : super(TicketState([])) {
+    on<BuyTicket>(_onBuyTicket);
+    on<GetTickets>(_onGetTickets);
+  }
 
-  @override
-  Stream<TicketState> mapEventToState(
-    TicketEvent event,
-  ) async* {
-    if(event is BuyTicket) {
-      await TicketServices.saveTicket(event.userID, event.ticket);
+  Future<void> _onBuyTicket(BuyTicket event, Emitter<TicketState> emit) async {
+    await TicketServices.saveTicket(event.userID, event.ticket);
 
-      List<Ticket> tickets = state.tickets + [event.ticket];
+    List<Ticket> updatedTickets = List.from(state.tickets)..add(event.ticket);
+    emit(TicketState(updatedTickets));
+  }
 
-      yield TicketState(tickets);
-    } else if(event is GetTickets) {
-      List<Ticket> tickets = await TicketServices.getTickets(event.userID);
-
-      yield TicketState(tickets);
-    }
+  Future<void> _onGetTickets(
+      GetTickets event, Emitter<TicketState> emit) async {
+    List<Ticket> tickets = await TicketServices.getTickets(event.userID);
+    emit(TicketState(tickets));
   }
 }
